@@ -8,6 +8,7 @@
   <title>览悟找图 · 本地图片检索</title>
   <link rel="stylesheet" href="./styles.css" />
   <link rel="stylesheet" href="./feature-label.css" />
+  <link rel="stylesheet" href="./download-menu.css" />
 </head>
 <body>
   <header class="site-header" data-header>
@@ -43,11 +44,28 @@
         <h1>所见即得</h1>
         <div class="product-badge"><span></span> 本地 AI 图片检索</div>
         <p class="hero-lead">相似图片、人物、局部内容，一键找到。</p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#download">立即下载 macOS / Windows</a>
+        <div class="hero-actions" id="download">
+          <div class="download-picker" data-download-picker>
+            <button class="button button-primary download-trigger" type="button" aria-haspopup="menu" aria-expanded="false" data-download-trigger>
+              <span>立即下载</span>
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>
+            </button>
+            <div class="download-menu" role="menu" data-download-menu>
+              <a class="download-menu-option" role="menuitem" href="https://www.ilavu.com.cn/" target="_blank" rel="noreferrer">
+                <span class="download-menu-icon">⌘</span>
+                <span class="download-menu-copy"><b>macOS</b><small>Apple Silicon · arm64</small></span>
+                <span class="download-menu-arrow">↗</span>
+              </a>
+              <div class="download-menu-divider"></div>
+              <a class="download-menu-option" role="menuitem" href="https://www.ilavu.com.cn/" target="_blank" rel="noreferrer">
+                <span class="download-menu-icon">⊞</span>
+                <span class="download-menu-copy"><b>Windows</b><small>Windows 10 / 11 · x64</small></span>
+                <span class="download-menu-arrow">↗</span>
+              </a>
+            </div>
+          </div>
         </div>
         <div class="hero-facts" aria-label="产品特点">
-          
           <span><i>✓</i> 本地运行</span>
           <span><i>✓</i> 数据安全</span>
           <span><i>✓</i> 3天试用</span>
@@ -97,49 +115,26 @@
     <section class="feature-stack section-shell" id="features">
       <article class="feature-row reveal">
         <span class="feature-label">相似图片</span>
-        <div class="feature-copy">
-          <h3>一张图，找到所有相近画面</h3>
-        </div>
-        <div class="feature-visual visual-similar" aria-hidden="true">
-          <div class="source-card"></div>
-          <div class="match-rail"><div class="match-card"></div><div class="match-card"></div><div class="match-card"></div></div>
-          <div class="connection-line"></div>
-        </div>
+        <div class="feature-copy"><h3>一张图，找到所有相近画面</h3></div>
+        <div class="feature-visual visual-similar" aria-hidden="true"><div class="source-card"></div><div class="match-rail"><div class="match-card"></div><div class="match-card"></div><div class="match-card"></div></div><div class="connection-line"></div></div>
       </article>
 
       <article class="feature-row reverse reveal">
         <span class="feature-label">人物搜索</span>
-        <div class="feature-copy">
-          <h3>记得这个人，就能找到这个人</h3>
-        </div>
-        <div class="feature-visual visual-people" aria-hidden="true">
-          <div class="portrait portrait-main"><span class="face-ring"></span></div>
-          <div class="people-results"><div class="portrait"></div><div class="portrait"></div><div class="portrait"></div><div class="portrait"></div></div>
-          <div class="local-pill">仅在本机处理</div>
-        </div>
+        <div class="feature-copy"><h3>记得这个人，就能找到这个人</h3></div>
+        <div class="feature-visual visual-people" aria-hidden="true"><div class="portrait portrait-main"><span class="face-ring"></span></div><div class="people-results"><div class="portrait"></div><div class="portrait"></div><div class="portrait"></div><div class="portrait"></div></div><div class="local-pill">仅在本机处理</div></div>
       </article>
 
       <article class="feature-row reveal">
         <span class="feature-label">局部搜索</span>
-        <div class="feature-copy">
-          <h3>只有一小块，也能找回完整图片</h3>
-        </div>
-        <div class="feature-visual visual-crop" aria-hidden="true">
-          <div class="crop-source"><div class="crop-focus"></div></div>
-          <div class="crop-arrow">→</div>
-          <div class="crop-result"><span class="found-badge">找到原图</span></div>
-        </div>
+        <div class="feature-copy"><h3>只有一小块，也能找回完整图片</h3></div>
+        <div class="feature-visual visual-crop" aria-hidden="true"><div class="crop-source"><div class="crop-focus"></div></div><div class="crop-arrow">→</div><div class="crop-result"><span class="found-badge">找到原图</span></div></div>
       </article>
 
       <article class="feature-row reverse reveal">
         <span class="feature-label">本地图库</span>
-        <div class="feature-copy">
-          <h3>图片再多，也不用先整理完再开始</h3>
-        </div>
-        <div class="feature-visual visual-library" aria-hidden="true">
-          <div class="library-sidebar"><div class="library-line long"></div><div class="library-line"></div><div class="library-line active"></div><div class="library-line"></div></div>
-          <div class="library-grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        </div>
+        <div class="feature-copy"><h3>图片再多，也不用先整理完再开始</h3></div>
+        <div class="feature-visual visual-library" aria-hidden="true"><div class="library-sidebar"><div class="library-line long"></div><div class="library-line"></div><div class="library-line active"></div><div class="library-line"></div></div><div class="library-grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
       </article>
     </section>
 
@@ -160,20 +155,6 @@
       <div><strong>十万级</strong><span>本地图库检索</span></div>
       <div><strong>&lt; 1s</strong><span>索引后快速返回结果</span></div>
       <div><strong>0</strong><span>无需上传原始图片</span></div>
-    </section>
-
-    <section class="download section-shell reveal" id="download">
-      <div class="download-card">
-        <div class="download-copy">
-          <p class="section-kicker">现在开始</p>
-          <h2>让图库重新变得可搜索</h2>
-          <p>新用户试用3天。支持macOS Apple Silicon 与 Windows 10/11</p>
-        </div>
-        <div class="download-actions">
-          <a class="download-option" href="https://www.ilavu.com.cn/" target="_blank" rel="noreferrer"><span class="os-icon">⌘</span><span><b>下载 macOS 版</b><small>Apple Silicon · arm64</small></span><span class="arrow">↗</span></a>
-          <a class="download-option" href="https://www.ilavu.com.cn/" target="_blank" rel="noreferrer"><span class="os-icon windows-icon">⊞</span><span><b>下载 Windows 版</b><small>Windows 10 / 11 · x64</small></span><span class="arrow">↗</span></a>
-        </div>
-      </div>
     </section>
   </main>
 
