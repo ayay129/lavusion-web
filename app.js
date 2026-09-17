@@ -29,13 +29,12 @@ ensureDocsLink(mobileNav,true);
 // Keep footer links consistent across all pages.
 document.querySelectorAll('.footer-links a').forEach(link=>{
   if(link.textContent.trim()==='使用文档'){
-    link.href='./docs.html';
-    link.removeAttribute('target');
-    link.removeAttribute('rel');
+    link.remove();
+    return;
   }
   if(link.matches('a[href^="mailto:"]')){
-    link.href='mailto:admin@ilavu.comcn';
-    link.textContent='admin@ilavu.comcn';
+    link.href='mailto:admin@ilavu.com.cn';
+    link.textContent='admin@ilavu.com.cn';
   }
 });
 
