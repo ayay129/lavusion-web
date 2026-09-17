@@ -26,14 +26,30 @@ const ensureDocsLink=(nav,isMobile=false)=>{
 ensureDocsLink(desktopNav);
 ensureDocsLink(mobileNav,true);
 
-// Old footer links now point to the local documentation page.
+// Keep footer links consistent across all pages.
 document.querySelectorAll('.footer-links a').forEach(link=>{
   if(link.textContent.trim()==='使用文档'){
     link.href='./docs.html';
     link.removeAttribute('target');
     link.removeAttribute('rel');
   }
+  if(link.matches('a[href^="mailto:"]')){
+    link.href='mailto:admin@ilavu.comcn';
+    link.textContent='admin@ilavu.comcn';
+  }
 });
+
+const footerLinks=document.querySelector('.footer-links');
+if(footerLinks&&!footerLinks.querySelector('[data-icp]')){
+  footerLinks.style.flexWrap='wrap';
+  const icpLink=document.createElement('a');
+  icpLink.href='https://beian.miit.gov.cn/';
+  icpLink.target='_blank';
+  icpLink.rel='noreferrer';
+  icpLink.textContent='粤ICP备2026058851号-1';
+  icpLink.dataset.icp='true';
+  footerLinks.appendChild(icpLink);
+}
 
 const onScroll=()=>header?.classList.toggle('scrolled',window.scrollY>8);
 onScroll();
