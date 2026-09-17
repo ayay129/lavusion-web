@@ -1,4 +1,15 @@
 // =========================================================
+// Download configuration
+// =========================================================
+const downloadConfig = window.LAVUSION_CONFIG?.downloads ?? {};
+
+document.querySelectorAll('[data-download-platform]').forEach((link) => {
+  const platform = link.dataset.downloadPlatform;
+  const url = downloadConfig[platform];
+  if (url) link.href = url;
+});
+
+// =========================================================
 // Download dropdown
 // =========================================================
 const downloadPicker = document.querySelector('[data-download-picker]');
