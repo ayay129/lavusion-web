@@ -32,6 +32,11 @@ document.querySelectorAll('.footer-links a').forEach(link=>{
     link.remove();
     return;
   }
+  if(link.textContent.trim()==='隐私政策'){
+    link.href='./privacy.html';
+    link.removeAttribute('target');
+    link.removeAttribute('rel');
+  }
   if(link.matches('a[href^="mailto:"]')){
     link.href='mailto:admin@ilavu.com.cn';
     link.textContent='admin@ilavu.com.cn';
