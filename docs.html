@@ -6,52 +6,44 @@
   <meta name="theme-color" content="#f5f5f7" />
   <meta name="description" content="览悟找图使用文档：安装、建立图库、相似图片搜索、人物搜索、局部搜索、分组与常见问题。" />
   <title>使用文档 · 览悟找图</title>
-  <link rel="stylesheet" href="./styles.css" />
-  <link rel="stylesheet" href="./docs.css" />
+  <link rel="stylesheet" href="./css/common.css" />
+  <link rel="stylesheet" href="./css/docs.css" />
 </head>
 <body class="docs-page">
+  <!-- ========================= Header ========================= -->
   <header class="site-header" data-header>
     <div class="nav-shell">
       <a class="brand" href="./index.html" aria-label="览悟找图首页">
-        <span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 32 32" role="img"><path d="M7.7 8.2c2.3-2.5 5-3.7 8.3-3.7 5.8 0 10.6 4.4 11.3 10.1.8 6.8-4.5 12.9-11.3 12.9S3.9 21.4 4.7 14.6c.3-2.4 1.3-4.5 3-6.4Z"/><path class="brand-cut" d="M10.4 10.8c1.5-1.6 3.4-2.4 5.6-2.4 4 0 7.2 3 7.6 6.9.5 4.6-3 8.8-7.6 8.8s-8.2-4.2-7.6-8.8c.2-1.7.9-3.2 2-4.5Z"/><circle cx="20.8" cy="11.1" r="2.1"/></svg>
-        </span>
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" role="img"><path d="M7.7 8.2c2.3-2.5 5-3.7 8.3-3.7 5.8 0 10.6 4.4 11.3 10.1.8 6.8-4.5 12.9-11.3 12.9S3.9 21.4 4.7 14.6c.3-2.4 1.3-4.5 3-6.4Z"/><path class="brand-cut" d="M10.4 10.8c1.5-1.6 3.4-2.4 5.6-2.4 4 0 7.2 3 7.6 6.9.5 4.6-3 8.8-7.6 8.8s-8.2-4.2-7.6-8.8c.2-1.7.9-3.2 2-4.5Z"/><circle cx="20.8" cy="11.1" r="2.1"/></svg></span>
         <span>览悟找图</span>
       </a>
-
       <nav class="desktop-nav" aria-label="主导航">
         <a href="./index.html#features">功能</a>
         <a href="./pricing.html">价格</a>
+        <a class="active" href="./docs.html">文档</a>
       </nav>
-
-      <div class="nav-actions">
-        <button class="menu-button" type="button" aria-label="打开导航" aria-expanded="false" data-menu-button><span></span><span></span></button>
-      </div>
+      <div class="nav-actions"><button class="menu-button" type="button" aria-label="打开导航" aria-expanded="false" data-menu-button><span></span><span></span></button></div>
     </div>
     <div class="mobile-nav" data-mobile-nav>
       <a href="./index.html#features">功能</a>
       <a href="./pricing.html">价格</a>
+      <a href="./docs.html">文档</a>
     </div>
   </header>
 
   <main class="docs-main">
+    <!-- ========================= Hero ========================= -->
     <section class="docs-hero section-shell">
       <p class="docs-eyebrow">使用文档</p>
       <h1>从第一次打开，到开始搜索</h1>
       <p>只保留真正需要的操作说明。先建立图库，再选择相似图片、人物或局部搜索。</p>
     </section>
 
+    <!-- ========================= Docs content ========================= -->
     <div class="docs-layout section-shell">
       <aside class="docs-sidebar" aria-label="文档目录">
         <select class="docs-mobile-select" data-doc-select aria-label="选择章节">
-          <option value="#install">安装与登录</option>
-          <option value="#library">建立图库</option>
-          <option value="#similar">相似图片</option>
-          <option value="#people">人物搜索</option>
-          <option value="#crop">局部搜索</option>
-          <option value="#groups">分组管理</option>
-          <option value="#local">本地运行</option>
-          <option value="#faq">常见问题</option>
+          <option value="#install">安装与登录</option><option value="#library">建立图库</option><option value="#similar">相似图片</option><option value="#people">人物搜索</option><option value="#crop">局部搜索</option><option value="#groups">分组管理</option><option value="#local">本地运行</option><option value="#faq">常见问题</option>
         </select>
         <div class="docs-nav-groups">
           <div class="docs-nav-group"><span>开始</span><a href="#install">安装与登录</a><a href="#library">建立图库</a></div>
@@ -62,102 +54,41 @@
       </aside>
 
       <div class="docs-content">
-        <section class="doc-section" id="install">
-          <span class="doc-section-label">安装与登录</span>
-          <h2>安装后即可开始</h2>
-          <p>首次打开后登录账号，新用户会自动进入 3 天试用。</p>
-          <div class="doc-steps">
-            <div class="doc-step"><div><b>下载安装包</b><p>在首页选择 macOS 或 Windows 版本。</p></div></div>
-            <div class="doc-step"><div><b>安装并启动</b><p>macOS 支持 Apple Silicon，Windows 支持 Windows 10 / 11 x64。</p></div></div>
-            <div class="doc-step"><div><b>登录账号</b><p>使用邮箱登录后即可进入软件。</p></div></div>
-          </div>
-        </section>
+        <!-- 安装与登录 -->
+        <section class="doc-section" id="install"><span class="doc-section-label">安装与登录</span><h2>安装后即可开始</h2><p>首次打开后登录账号，新用户会自动进入 3 天试用。</p><div class="doc-steps"><div class="doc-step"><div><b>下载安装包</b><p>在首页选择 macOS 或 Windows 版本。</p></div></div><div class="doc-step"><div><b>安装并启动</b><p>macOS 支持 Apple Silicon，Windows 支持 Windows 10 / 11 x64。</p></div></div><div class="doc-step"><div><b>登录账号</b><p>使用邮箱登录后即可进入软件。</p></div></div></div></section>
 
-        <section class="doc-section" id="library">
-          <span class="doc-section-label">建立图库</span>
-          <h2>先让图片变得可搜索</h2>
-          <p>选择本地图片文件夹并建立索引。索引完成后，图片无需移动，也不需要重新整理。</p>
-          <div class="doc-steps">
-            <div class="doc-step"><div><b>添加图片文件夹</b><p>选择你希望搜索的本地目录。</p></div></div>
-            <div class="doc-step"><div><b>选择模型并开始索引</b><p>根据套餐和机器性能选择对应的找图模型。</p></div></div>
-            <div class="doc-step"><div><b>等待索引完成</b><p>完成后即可直接用图片进行搜索。</p></div></div>
-          </div>
-          <div class="doc-shot" aria-label="图库界面示意"><div class="doc-shot-window"><div class="doc-shot-bar"><i></i><i></i><i></i></div><div class="doc-shot-body"><div class="doc-shot-side"></div><div class="doc-shot-grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div><span class="doc-shot-caption">后续替换为真实截图</span></div>
-        </section>
+        <!-- 建立图库 -->
+        <section class="doc-section" id="library"><span class="doc-section-label">建立图库</span><h2>先让图片变得可搜索</h2><p>选择本地图片文件夹并建立索引。索引完成后，图片无需移动，也不需要重新整理。</p><div class="doc-steps"><div class="doc-step"><div><b>添加图片文件夹</b><p>选择你希望搜索的本地目录。</p></div></div><div class="doc-step"><div><b>选择模型并开始索引</b><p>根据套餐和机器性能选择对应的找图模型。</p></div></div><div class="doc-step"><div><b>等待索引完成</b><p>完成后即可直接用图片进行搜索。</p></div></div></div><div class="doc-shot" aria-label="图库界面示意"><div class="doc-shot-window"><div class="doc-shot-bar"><i></i><i></i><i></i></div><div class="doc-shot-body"><div class="doc-shot-side"></div><div class="doc-shot-grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div><span class="doc-shot-caption">后续替换为真实截图</span></div></section>
 
-        <section class="doc-section" id="similar">
-          <span class="doc-section-label">相似图片</span>
-          <h2>用一张图，找到相近画面</h2>
-          <p>选择任意图片作为查询条件，软件会从当前图库或指定范围中返回视觉相似结果。</p>
-          <div class="doc-steps">
-            <div class="doc-step"><div><b>选择一张查询图片</b><p>可以从软件内选择，也可以从本地拖入图片。</p></div></div>
-            <div class="doc-step"><div><b>选择搜索范围</b><p>可搜索整个图库，也可以限制到指定文件夹或分组。</p></div></div>
-            <div class="doc-step"><div><b>查看结果</b><p>结果按相似度返回，可继续打开、筛选或加入分组。</p></div></div>
-          </div>
-        </section>
+        <!-- 相似图片 -->
+        <section class="doc-section" id="similar"><span class="doc-section-label">相似图片</span><h2>用一张图，找到相近画面</h2><p>选择任意图片作为查询条件，软件会从当前图库或指定范围中返回视觉相似结果。</p><div class="doc-steps"><div class="doc-step"><div><b>选择一张查询图片</b><p>可以从软件内选择，也可以从本地拖入图片。</p></div></div><div class="doc-step"><div><b>选择搜索范围</b><p>可搜索整个图库，也可以限制到指定文件夹或分组。</p></div></div><div class="doc-step"><div><b>查看结果</b><p>结果按相似度返回，可继续打开、筛选或加入分组。</p></div></div></div></section>
 
-        <section class="doc-section" id="people">
-          <span class="doc-section-label">人物搜索</span>
-          <h2>用一张人像，找到同一个人</h2>
-          <p>选择包含人脸的图片，识别人脸后即可在本地图库中搜索同一人物。</p>
-          <div class="doc-steps">
-            <div class="doc-step"><div><b>打开人物搜索</b><p>选择包含清晰人脸的图片作为查询。</p></div></div>
-            <div class="doc-step"><div><b>选择要搜索的人脸</b><p>当图片中有多个人时，选择其中一个人继续搜索。</p></div></div>
-            <div class="doc-step"><div><b>浏览人物结果</b><p>返回该人物在图库中出现过的相关图片。</p></div></div>
-          </div>
-          <div class="doc-callout">人脸识别和搜索均在本机完成，原始图片不会上传到服务器。</div>
-        </section>
+        <!-- 人物搜索 -->
+        <section class="doc-section" id="people"><span class="doc-section-label">人物搜索</span><h2>用一张人像，找到同一个人</h2><p>选择包含人脸的图片，识别人脸后即可在本地图库中搜索同一人物。</p><div class="doc-steps"><div class="doc-step"><div><b>打开人物搜索</b><p>选择包含清晰人脸的图片作为查询。</p></div></div><div class="doc-step"><div><b>选择要搜索的人脸</b><p>当图片中有多个人时，选择其中一个人继续搜索。</p></div></div><div class="doc-step"><div><b>浏览人物结果</b><p>返回该人物在图库中出现过的相关图片。</p></div></div></div><div class="doc-callout">人脸识别和搜索均在本机完成，原始图片不会上传到服务器。</div></section>
 
-        <section class="doc-section" id="crop">
-          <span class="doc-section-label">局部搜索</span>
-          <h2>只截一小块，也能继续找</h2>
-          <p>当你只关心图片中的商品、人物、图案或某个局部时，可以直接框选区域进行搜索。</p>
-          <div class="doc-steps">
-            <div class="doc-step"><div><b>进入局部搜索</b><p>打开图片后选择局部搜索工具。</p></div></div>
-            <div class="doc-step"><div><b>框选目标区域</b><p>只保留真正想搜索的主体区域。</p></div></div>
-            <div class="doc-step"><div><b>开始搜索</b><p>软件会用选中的局部内容匹配图库中的完整图片或相关画面。</p></div></div>
-          </div>
-        </section>
+        <!-- 局部搜索 -->
+        <section class="doc-section" id="crop"><span class="doc-section-label">局部搜索</span><h2>只截一小块，也能继续找</h2><p>当你只关心图片中的商品、人物、图案或某个局部时，可以直接框选区域进行搜索。</p><div class="doc-steps"><div class="doc-step"><div><b>进入局部搜索</b><p>打开图片后选择局部搜索工具。</p></div></div><div class="doc-step"><div><b>框选目标区域</b><p>只保留真正想搜索的主体区域。</p></div></div><div class="doc-step"><div><b>开始搜索</b><p>软件会用选中的局部内容匹配图库中的完整图片或相关画面。</p></div></div></div></section>
 
-        <section class="doc-section" id="groups">
-          <span class="doc-section-label">分组管理</span>
-          <h2>搜索以后，顺手整理</h2>
-          <p>搜索结果可以直接加入现有分组，也可以新建分组，不需要离开当前工作流。</p>
-          <div class="doc-steps">
-            <div class="doc-step"><div><b>选择图片</b><p>支持单张或批量选择搜索结果。</p></div></div>
-            <div class="doc-step"><div><b>加入分组</b><p>选择现有分组，或直接新建一个分组。</p></div></div>
-            <div class="doc-step"><div><b>继续搜索或整理</b><p>分组不会改变原始文件位置。</p></div></div>
-          </div>
-        </section>
+        <!-- 分组管理 -->
+        <section class="doc-section" id="groups"><span class="doc-section-label">分组管理</span><h2>搜索以后，顺手整理</h2><p>搜索结果可以直接加入现有分组，也可以新建分组，不需要离开当前工作流。</p><div class="doc-steps"><div class="doc-step"><div><b>选择图片</b><p>支持单张或批量选择搜索结果。</p></div></div><div class="doc-step"><div><b>加入分组</b><p>选择现有分组，或直接新建一个分组。</p></div></div><div class="doc-step"><div><b>继续搜索或整理</b><p>分组不会改变原始文件位置。</p></div></div></div></section>
 
-        <section class="doc-section" id="local">
-          <span class="doc-section-label">本地运行</span>
-          <h2>图库和模型都留在本机</h2>
-          <p>图片索引、模型推理和搜索均在本地运行。软件只需要账号与授权相关的网络访问，不需要上传你的图库。</p>
-          <div class="doc-callout">如果机器配置较低，可以优先选择轻量模型；更高精度模型会占用更多 CPU、GPU 或内存资源。</div>
-        </section>
+        <!-- 本地运行 -->
+        <section class="doc-section" id="local"><span class="doc-section-label">本地运行</span><h2>图库和模型都留在本机</h2><p>图片索引、模型推理和搜索均在本地运行。软件只需要账号与授权相关的网络访问，不需要上传你的图库。</p><div class="doc-callout">如果机器配置较低，可以优先选择轻量模型；更高精度模型会占用更多 CPU、GPU 或内存资源。</div></section>
 
-        <section class="doc-section" id="faq">
-          <span class="doc-section-label">常见问题</span>
-          <h2>常见问题</h2>
-          <div class="doc-shortcuts">
-            <div class="doc-shortcut"><span>图片必须复制进软件目录吗？</span><span>不需要，直接索引原文件夹</span></div>
-            <div class="doc-shortcut"><span>删除索引会删除原图吗？</span><span>不会</span></div>
-            <div class="doc-shortcut"><span>图片会上传云端吗？</span><span>不会</span></div>
-            <div class="doc-shortcut"><span>支持哪些系统？</span><span>macOS / Windows</span></div>
-          </div>
-        </section>
+        <!-- 常见问题 -->
+        <section class="doc-section" id="faq"><span class="doc-section-label">常见问题</span><h2>常见问题</h2><div class="doc-shortcuts"><div class="doc-shortcut"><span>图片必须复制进软件目录吗？</span><span>不需要，直接索引原文件夹</span></div><div class="doc-shortcut"><span>删除索引会删除原图吗？</span><span>不会</span></div><div class="doc-shortcut"><span>图片会上传云端吗？</span><span>不会</span></div><div class="doc-shortcut"><span>支持哪些系统？</span><span>macOS / Windows</span></div></div></section>
       </div>
     </div>
   </main>
 
+  <!-- ========================= Footer ========================= -->
   <footer class="site-footer section-shell">
     <div class="footer-brand"><span class="brand-mark small" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7.7 8.2c2.3-2.5 5-3.7 8.3-3.7 5.8 0 10.6 4.4 11.3 10.1.8 6.8-4.5 12.9-11.3 12.9S3.9 21.4 4.7 14.6c.3-2.4 1.3-4.5 3-6.4Z"/><path class="brand-cut" d="M10.4 10.8c1.5-1.6 3.4-2.4 5.6-2.4 4 0 7.2 3 7.6 6.9.5 4.6-3 8.8-7.6 8.8s-8.2-4.2-7.6-8.8c.2-1.7.9-3.2 2-4.5Z"/><circle cx="20.8" cy="11.1" r="2.1"/></svg></span><span>览悟找图</span></div>
-    <div class="footer-links"><a href="./index.html">首页</a><a href="./pricing.html">价格</a><a href="mailto:ayay129@foxmail.com">联系</a></div>
+    <div class="footer-links"><a href="./index.html">首页</a><a href="./pricing.html">价格</a><a href="./privacy.html">隐私政策</a><a href="mailto:admin@ilavu.com.cn">admin@ilavu.com.cn</a><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">粤ICP备2026058851号-1</a></div>
     <p class="copyright">© 2026 览悟智能 · Lavu</p>
   </footer>
 
-  <script src="./app.js"></script>
-  <script src="./docs.js"></script>
+  <script src="./js/common.js"></script>
+  <script src="./js/docs.js"></script>
 </body>
 </html>
