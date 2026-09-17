@@ -69,6 +69,7 @@ body {
 }
 
 .brand-mark svg { width: 100%; fill: #111; }
+.brand-mark img { width: 100%; height: 100%; display: block; object-fit: contain; }
 .brand-mark .brand-cut { fill: var(--bg); }
 .brand-mark.small { width: 22px; height: 22px; }
 
