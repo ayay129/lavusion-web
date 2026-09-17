@@ -37,3 +37,68 @@ document.addEventListener('keydown', (event) => {
     downloadTrigger?.focus();
   }
 });
+
+// =========================================================
+// macOS unsigned build notice
+// =========================================================
+const macDownloadLink = document.querySelector('[data-download-platform="macos"]');
+const macDownloadModal = document.querySelector('[data-mac-download-modal]');
+const macDownloadConfirm = document.querySelector('[data-mac-download-confirm]');
+const macDownloadCancelButtons = document.querySelectorAll('[data-mac-download-cancel]');
+const copyMacCommandButton = document.querySelector('[data-copy-mac-command]');
+const macCommand = document.querySelector('[data-mac-command]');
+let pendingMacDownloadUrl = '';
+
+const closeMacDownloadModal = () => {
+  if (!macDownloadModal) return;
+  macDownloadModal.hidden = true;
+  document.body.classList.remove('modal-open');
+  pendingMacDownloadUrl = '';
+};
+
+macDownloadLink?.addEventListener('click', (event) => {
+  event.preventDefault();
+  pendingMacDownloadUrl = downloadConfig.macos || macDownloadLink.href;
+  closeDownloadMenu();
+  if (!macDownloadModal) {
+    if (pendingMacDownloadUrl) window.location.href = pendingMacDownloadUrl;
+    return;
+  }
+  macDownloadModal.hidden = false;
+  document.body.classList.add('modal-open');
+  macDownloadConfirm?.focus();
+});
+
+macDownloadCancelButtons.forEach((button) => {
+  button.addEventListener('click', closeMacDownloadModal);
+});
+
+macDownloadConfirm?.addEventListener('click', () => {
+  const url = pendingMacDownloadUrl;
+  closeMacDownloadModal();
+  if (url) window.location.href = url;
+});
+
+copyMacCommandButton?.addEventListener('click', async () => {
+  const command = macCommand?.textContent?.trim();
+  if (!command) return;
+
+  try {
+    await navigator.clipboard.writeText(command);
+    const previous = copyMacCommandButton.textContent;
+    copyMacCommandButton.textContent = '已复制';
+    setTimeout(() => { copyMacCommandButton.textContent = previous; }, 1400);
+  } catch {
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(macCommand);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && macDownloadModal && !macDownloadModal.hidden) {
+    closeMacDownloadModal();
+  }
+});
