@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470 470" role="img" aria-label="览悟智能 Lavu">
   <defs>
     <linearGradient id="lavu-g" x1="40" y1="430" x2="430" y2="40" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#5B8DEF"/>
-      <stop offset="0.55" stop-color="#6A7AF4"/>
-      <stop offset="1" stop-color="#7567F8"/>
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.55" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#FFFFFF"/>
     </linearGradient>
   </defs>
-  <g transform="translate(0,440) scale(0.1,-0.1)" fill="url(#lavu-g)" fill-rule="evenodd" stroke="none">
+  <g transform="translate(0,440) scale(0.1,-0.1)" fill="url(#lavu-g)" fill-rule="evenodd" stroke="#000000" stroke-width="36" stroke-linejoin="round" stroke-linecap="round" paint-order="stroke fill">
     <path d="M2105 4076 c-160 -52 -181 -78 -502 -626 -252 -432 -367 -628 -893
 -1520 -318 -540 -313 -529 -314 -740 -1 -115 3 -146 22 -210 88 -279 303 -478
 572 -526 59 -10 275 -13 1032 -14 911 0 959 1 1017 19 112 35 208 113 253 205

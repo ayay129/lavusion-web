@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470 470" role="img" aria-label="览悟智能 Lavu">
   <defs>
     <linearGradient id="lavu-g" x1="40" y1="430" x2="430" y2="40" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#5B8DEF"/>
-      <stop offset="0.55" stop-color="#6A7AF4"/>
-      <stop offset="1" stop-color="#7567F8"/>
+      <stop offset="0" stop-color="#6E8FD9"/>
+      <stop offset="0.55" stop-color="#726FEA"/>
+      <stop offset="1" stop-color="#766BDD"/>
     </linearGradient>
   </defs>
   <g transform="translate(0,440) scale(0.1,-0.1)" fill="url(#lavu-g)" fill-rule="evenodd" stroke="none">
