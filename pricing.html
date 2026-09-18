@@ -8,6 +8,7 @@
   <title>价格 · 览悟找图</title>
   <link rel="stylesheet" href="./css/common.css" />
   <link rel="stylesheet" href="./css/pricing.css" />
+  <link rel="stylesheet" href="./css/mac-download.css" />
 </head>
 <body class="pricing-page">
   <!-- ========================= Header ========================= -->
@@ -52,14 +53,12 @@
       <article class="plan-card reveal">
         <p class="plan-tier">BASIC</p><h2>Basic版</h2><p class="plan-desc">适合基础搜图和轻量人脸搜索</p>
         <div class="plan-price"><span class="currency">¥</span><strong data-price-tier="basic">14.90</strong><span class="period" data-price-period>/ 月</span></div>
-        <a class="plan-cta" href="./index.html#download">下载并试用</a><p class="plan-note">新用户免费试用 3 天</p>
         <div class="plan-features"><div class="plan-feature"><i class="feature-check">✓</i><span>轻量 找图 + 人脸模型</span></div></div>
       </article>
 
       <article class="plan-card reveal">
         <p class="plan-tier">PLUS</p><h2>Plus版</h2><p class="plan-desc">适合日常图库和更高精度搜索</p>
         <div class="plan-price"><span class="currency">¥</span><strong data-price-tier="plus">24.90</strong><span class="period" data-price-period>/ 月</span></div>
-        <a class="plan-cta" href="./index.html#download">下载并试用</a><p class="plan-note">购买在软件内完成</p>
         <div class="plan-features">
           <div class="plan-feature"><i class="feature-check">✓</i><span>轻量 找图 + 人脸模型</span></div>
           <div class="plan-feature"><i class="feature-check">✓</i><span>标准 找图 + 人脸模型</span></div>
@@ -70,7 +69,6 @@
       <article class="plan-card reveal">
         <p class="plan-tier">PRO</p><h2>Pro版</h2><p class="plan-desc">适合专业图库、大图库和多设备使用</p>
         <div class="plan-price"><span class="currency">¥</span><strong data-price-tier="pro">39.90</strong><span class="period" data-price-period>/ 月</span></div>
-        <a class="plan-cta" href="./index.html#download">下载并试用</a><p class="plan-note">支付完成后自动激活</p>
         <div class="plan-features">
           <div class="plan-feature"><i class="feature-check">✓</i><span>轻量 找图 + 人脸模型</span></div>
           <div class="plan-feature"><i class="feature-check">✓</i><span>标准 找图 + 人脸模型</span></div>
@@ -82,6 +80,33 @@
     </section>
 
     <p class="pricing-footnote section-shell">价格以人民币计。购买与授权激活在览悟找图客户端内完成。</p>
+
+    <!-- ========================= Download ========================= -->
+    <section class="pricing-download section-shell reveal" id="download">
+      <div class="pricing-download-copy">
+        <h2>先试用，再决定</h2>
+        <p>Basic、Plus、Pro 共用同一个客户端，新用户可免费试用 3 天</p>
+      </div>
+      <div class="download-picker" data-download-picker>
+        <button class="button button-primary download-trigger" type="button" aria-haspopup="menu" aria-expanded="false" data-download-trigger>
+          <span>立即下载 MacOS/Windows</span>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>
+        </button>
+        <div class="download-menu" role="menu" data-download-menu>
+          <a class="download-menu-option" role="menuitem" href="#" rel="noreferrer" data-download-platform="macos">
+            <span class="download-menu-icon">⌘</span>
+            <span class="download-menu-copy"><b>macOS</b><small>Apple Silicon · arm64</small></span>
+            <span class="download-menu-arrow">↗</span>
+          </a>
+          <div class="download-menu-divider"></div>
+          <a class="download-menu-option" role="menuitem" href="#" rel="noreferrer" data-download-platform="windows">
+            <span class="download-menu-icon">⊞</span>
+            <span class="download-menu-copy"><b>Windows</b><small>Windows 10 / 11 · x64</small></span>
+            <span class="download-menu-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
 
     <!-- ========================= Purchase flow ========================= -->
     <section class="purchase-flow section-shell reveal">
@@ -106,6 +131,26 @@
     </section>
   </main>
 
+  <!-- ========================= macOS download notice ========================= -->
+  <div class="mac-download-modal" data-mac-download-modal hidden>
+    <div class="mac-download-backdrop" data-mac-download-cancel></div>
+    <div class="mac-download-dialog" role="dialog" aria-modal="true" aria-labelledby="mac-download-title">
+      <button class="mac-download-close" type="button" aria-label="关闭" data-mac-download-cancel>×</button>
+      <p class="mac-download-kicker">macOS 下载提示</p>
+      <h2 id="mac-download-title">首次打开可能提示“文件已损坏”</h2>
+      <p class="mac-download-desc">当前 macOS 版本暂未完成 Apple 签名与公证。如果出现该提示，请先将「览悟找图」拖入“应用程序”，然后打开终端执行：</p>
+      <div class="mac-command-row">
+        <code data-mac-command>sudo xattr -d com.apple.quarantine "/Applications/览悟找图.app"</code>
+        <button type="button" data-copy-mac-command>复制</button>
+      </div>
+      <p class="mac-download-note">执行后再次打开应用即可。后续完成签名与公证后将不再需要此步骤。</p>
+      <div class="mac-download-actions">
+        <button class="mac-download-cancel" type="button" data-mac-download-cancel>取消</button>
+        <button class="mac-download-confirm" type="button" data-mac-download-confirm>我知道了，继续下载</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ========================= Footer ========================= -->
   <footer class="site-footer section-shell">
     <div class="footer-brand">
@@ -125,6 +170,8 @@
   </footer>
 
   <script src="./js/common.js"></script>
+  <script src="./js/config.js"></script>
+  <script src="./js/download.js"></script>
   <script src="./js/pricing.js"></script>
 </body>
 </html>
