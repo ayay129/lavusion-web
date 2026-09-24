@@ -22,6 +22,47 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+#top,
+.docs-main,
+.pricing-main,
+.privacy-main {
+  position: relative;
+  isolation: isolate;
+}
+
+#top::before,
+.docs-main::before,
+.pricing-main::before,
+.privacy-main::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 auto;
+  height: 620px;
+  background-color: #f8faff;
+  background-image:
+    radial-gradient(ellipse at 18% 24%, rgba(91, 144, 255, .09), transparent 44%),
+    radial-gradient(ellipse at 78% 42%, rgba(140, 118, 244, .06), transparent 40%),
+    linear-gradient(rgba(82, 119, 192, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(82, 119, 192, .035) 1px, transparent 1px);
+  background-size: auto, auto, 56px 56px, 56px 56px;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 76%, transparent 100%);
+  pointer-events: none;
+}
+
+#top::before { height: 760px; }
+
+@media (max-width: 980px) {
+  #top::before { height: 1080px; }
+}
+
+@media (max-width: 700px) {
+  #top::before,
+  .docs-main::before,
+  .pricing-main::before,
+  .privacy-main::before { height: 700px; }
+}
+
 .section-shell {
   width: min(1180px, calc(100% - 40px));
   margin: 0 auto;
