@@ -3,8 +3,7 @@
 // =========================================================
 // Shared download behaviour lives in ./download.js.
 
-const cropMotion = document.querySelector('.crop-motion');
-if (cropMotion) {
+document.querySelectorAll('.feature-motion').forEach((cropMotion) => {
   let started = false;
   let visible = false;
   const playCropMotion = () => {
@@ -17,7 +16,7 @@ if (cropMotion) {
     }
     if (!timeline) return;
     started = true;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) timeline.seek(8);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) timeline.seek(timeline.duration());
     else timeline.play(0);
   };
   cropMotion.addEventListener('load', playCropMotion);
@@ -28,4 +27,4 @@ if (cropMotion) {
     if (started) cropObserver.disconnect();
   }, { threshold: .2 });
   cropObserver.observe(cropMotion);
-}
+});

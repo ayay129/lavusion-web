@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>览悟找图 · 多人脸搜索</title>
+  <script src="../local-fabric-match/assets/gsap.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #f5f5f7; }
+    body { color: #111114; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif; -webkit-font-smoothing: antialiased; }
+    #main { position: absolute; left: 50%; top: 50%; width: 1200px; height: 810px; transform: translate(-50%, -50%) scale(var(--fit-scale, 1)); transform-origin: center; }
+    .scene-content { width: 100%; height: 100%; padding: 60px; display: flex; align-items: center; justify-content: center; gap: 22px; }
+    .query-zone { flex: 0 0 370px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+    .query-photo { position: relative; width: 370px; aspect-ratio: 1099 / 618; padding: 5px; border: 1px solid #dedee2; border-radius: 17px; background: #fff; box-shadow: 0 18px 45px #11111412; }
+    .query-photo > img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 11px; filter: brightness(1.12); }
+    .face-box { position: absolute; border: 1.5px solid rgba(255,255,255,.94); border-radius: 7px; box-shadow: 0 0 0 1px #11111444; opacity: .82; }
+    .face-box span { position: absolute; left: -1px; top: -20px; padding: 2px 6px; border-radius: 5px 5px 5px 0; background: rgba(20,20,22,.84); color: #fff; font-size: 12px; line-height: 16px; white-space: nowrap; }
+    .face-1 { left: 32.5%; top: 9%; width: 11%; height: 23%; border-color: #1976f3; box-shadow: 0 0 0 1px #1976f399, 0 0 13px #1976f366; opacity: 1; }
+    .face-1 span { background: #1976f3; }
+    .face-4 { left: 52%; top: 9%; width: 11%; height: 23%; }
+    .face-3 { left: 4%; top: 29%; width: 6%; height: 15%; }
+    .face-5 { left: 20%; top: 29%; width: 6%; height: 15%; }
+    .face-2 { left: 83%; top: 29%; width: 7%; height: 15%; }
+    .selected-caption { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #e6e5e7; border-radius: 999px; background: #fff; color: #37363a; font-size: 18px; }
+    .selected-caption i { width: 8px; height: 8px; border-radius: 50%; background: #1976f3; }
+    .connector { flex: 0 0 48px; height: 2px; background: #1976f3; transform-origin: left center; position: relative; margin-bottom: 24px; }
+    .connector::after { content: ''; position: absolute; right: 0; top: -5px; width: 10px; height: 10px; border-top: 2px solid #1976f3; border-right: 2px solid #1976f3; transform: rotate(45deg); }
+    .results { flex: 0 0 474px; display: flex; flex-direction: column; gap: 12px; }
+    .results-label { color: #6e6e73; font-size: 24px; line-height: 32px; font-weight: 450; }
+    .result-grid { display: grid; grid-template-columns: repeat(3, 150px); gap: 12px; }
+    .result-card { position: relative; width: 150px; aspect-ratio: 1; overflow: hidden; padding: 5px; border-radius: 16px; background: #fff; box-shadow: 0 10px 28px #1111140c; }
+    .result-card img { display: block; width: 100%; height: 100%; border-radius: 11px; object-fit: cover; }
+    .score { position: absolute; top: 9px; right: 9px; min-width: 50px; padding: 5px 7px; border-radius: 999px; background: rgba(17,17,20,.82); color: #fff; text-align: center; font-size: 17px; line-height: 1; font-weight: 600; font-variant-numeric: tabular-nums; box-shadow: 0 2px 8px #0003; }
+    @media (max-width: 440px) {
+      #main { left: 0; top: 0; width: 100vw; height: 100vh; transform: none; }
+      .scene-content { padding: 12px; gap: 7px; }
+      .query-zone { flex: 0 0 29%; min-width: 0; gap: 7px; }
+      .query-photo { width: 100%; padding: 3px; border-radius: 9px; }
+      .query-photo > img { border-radius: 6px; }
+      .face-box { border-width: 1px; border-radius: 3px; }
+      .face-box span { top: -12px; padding: 1px 3px; border-radius: 3px; font-size: 7px; line-height: 10px; }
+      .selected-caption { gap: 4px; padding: 5px 6px; font-size: 9px; }
+      .selected-caption i { width: 5px; height: 5px; }
+      .connector { display: none; }
+      .results { flex: 1 1 auto; min-width: 0; gap: 6px; }
+      .results-label { font-size: 12px; line-height: 16px; }
+      .result-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+      .result-card { width: 100%; padding: 3px; border-radius: 7px; }
+      .result-card img { border-radius: 4px; }
+      .score { top: 4px; right: 4px; min-width: 0; padding: 3px 4px; font-size: 9px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="main" data-composition-id="main" data-start="0" data-duration="8" data-width="1200" data-height="810">
+    <div class="scene-content">
+      <div class="query-zone">
+        <div class="query-photo">
+          <img src="assets/group-photo.jpg" alt="包含多个人物的查询照片">
+          <div class="face-box face-3"><span>人脸3</span></div>
+          <div class="face-box face-5"><span>人脸5</span></div>
+          <div class="face-box face-1"><span>人脸1</span></div>
+          <div class="face-box face-4"><span>人脸4</span></div>
+          <div class="face-box face-2"><span>人脸2</span></div>
+        </div>
+        <div class="selected-caption"><i></i>人脸1 · 已选中</div>
+      </div>
+      <div class="connector" aria-hidden="true"></div>
+      <div class="results">
+        <div class="results-label">相似结果</div>
+        <div class="result-grid">
+          <div class="result-card"><img src="assets/face-01.jpg" alt="相似结果一"><span class="score">74%</span></div>
+          <div class="result-card"><img src="assets/face-02.jpg" alt="相似结果二"><span class="score">74%</span></div>
+          <div class="result-card"><img src="assets/face-03.jpg" alt="相似结果三"><span class="score">72%</span></div>
+          <div class="result-card"><img src="assets/face-04.jpg" alt="相似结果四"><span class="score">72%</span></div>
+          <div class="result-card"><img src="assets/face-05.jpg" alt="相似结果五"><span class="score">71%</span></div>
+          <div class="result-card"><img src="assets/face-06.jpg" alt="相似结果六"><span class="score">71%</span></div>
+          <div class="result-card"><img src="assets/face-07.jpg" alt="相似结果七"><span class="score">71%</span></div>
+          <div class="result-card"><img src="assets/face-08.jpg" alt="相似结果八"><span class="score">70%</span></div>
+          <div class="result-card"><img src="assets/face-09.jpg" alt="相似结果九"><span class="score">69%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const composition = document.querySelector('#main');
+    const fitComposition = () => {
+      const compact = window.innerWidth < 440;
+      composition.classList.toggle('compact', compact);
+      if (!compact) document.documentElement.style.setProperty('--fit-scale', String(Math.min(window.innerWidth / 1200, window.innerHeight / 810)));
+    };
+    fitComposition();
+    window.addEventListener('resize', fitComposition);
+
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    tl.from('.query-photo', { opacity: 0, scale: .96, duration: .6, ease: 'power3.out' }, .15);
+    tl.from('.face-box', { opacity: 0, scale: 1.12, duration: .34, stagger: .11, ease: 'sine.out' }, .55);
+    tl.from('.query-zone', { x: 260, scale: 1.2, duration: .88, ease: 'power3.inOut' }, 1.35);
+    tl.from('.selected-caption', { opacity: 0, y: 9, duration: .4, ease: 'circ.out' }, 1.75);
+    tl.from('.connector', { scaleX: 0, opacity: 0, duration: .4, ease: 'power1.out' }, 1.9);
+    tl.from('.results-label', { opacity: 0, x: 10, duration: .4, ease: 'sine.out' }, 2.05);
+    tl.from('.result-card', { opacity: 0, y: 20, scale: .96, duration: .56, stagger: { each: .06, from: 'start' }, ease: 'power2.out' }, 2.2);
+    tl.from('.score', { opacity: 0, y: 5, duration: .28, stagger: .04, ease: 'circ.out' }, 2.65);
+    window.__timelines.main = tl;
+    if (location.protocol === 'file:' || window.parent === window) {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) tl.seek(8);
+      else tl.play(0);
+    }
+  </script>
+</body>
+</html>
