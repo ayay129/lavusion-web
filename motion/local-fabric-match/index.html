@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>览悟找图 · 局部布料匹配</title>
+  <script src="assets/gsap.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #f5f5f7; }
+    body { color: #111114; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif; -webkit-font-smoothing: antialiased; }
+    #main { position: absolute; left: 50%; top: 50%; width: 1200px; height: 810px; transform: translate(-50%, -50%) scale(var(--fit-scale, 1)); transform-origin: center; }
+    .scene-content { width: 100%; height: 100%; padding: 60px; display: flex; align-items: center; gap: 12px; }
+    .query { flex: 0 0 220px; display: flex; flex-direction: column; align-items: center; gap: 23px; }
+    .query-frame { width: 220px; padding: 7px; border: 1.5px solid #71364c; border-radius: 19px; background: #fff; box-shadow: 0 18px 45px #1111140b; }
+    .query img { display: block; width: 203px; height: 160px; object-fit: contain; border-radius: 11px; }
+    .query-label { font-size: 28px; font-weight: 550; letter-spacing: .015em; }
+    .connector { flex: 0 0 76px; height: 2px; background: #71364c; transform-origin: left center; margin-bottom: 54px; position: relative; }
+    .connector::after { content: ''; position: absolute; right: 0; top: -5px; width: 10px; height: 10px; border-top: 2px solid #71364c; border-right: 2px solid #71364c; transform: rotate(45deg); }
+    .results { flex: 0 0 760px; display: flex; flex-direction: column; gap: 26px; }
+    .results-label { color: #6e6e73; font-size: 28px; font-weight: 450; }
+    .cards { display: flex; align-items: center; gap: 20px; }
+    .card { flex: 0 0 210px; padding: 8px; border-radius: 20px; background: #fff; box-shadow: 0 12px 30px #11111408; }
+    .card.primary { flex-basis: 300px; box-shadow: 0 24px 55px #11111412; }
+    .fabric { display: block; width: 194px; height: 259px; border-radius: 13px; object-fit: contain; }
+    .primary .fabric { width: 284px; height: 379px; }
+    .score { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; padding: 14px 8px 9px; white-space: nowrap; }
+    .score span { color: #6e6e73; font-size: 24px; }
+    .score strong { font-size: 36px; font-weight: 650; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+    .primary .score strong { font-size: 42px; color: #71364c; }
+    .primary .score { padding-top: 16px; padding-bottom: 12px; }
+    @media (max-width: 440px) {
+      #main { left: 0; top: 0; width: 100vw; height: 100vh; transform: none; }
+      .scene-content { padding: 12px; gap: 8px; }
+      .query { flex: 0 0 42%; min-width: 0; gap: 8px; }
+      .query-frame { width: 100%; padding: 4px; border-radius: 13px; }
+      .query img { width: 100%; height: auto; aspect-ratio: 1.27; object-fit: contain; }
+      .query-label { font-size: 14px; }
+      .connector { display: none; }
+      .results { flex: 1 1 auto; min-width: 0; gap: 8px; }
+      .results-label { font-size: 14px; }
+      .cards { gap: 0; }
+      .card.secondary { display: none; }
+      .card.primary { flex: 1 1 auto; min-width: 0; padding: 5px; border-radius: 13px; }
+      .fabric, .primary .fabric { width: 100%; height: auto; max-height: 118px; aspect-ratio: .75; object-fit: contain; border-radius: 8px; }
+      .score, .primary .score { gap: 3px; padding: 6px 4px 4px; }
+      .score span { font-size: 10px; }
+      .score strong, .primary .score strong { font-size: 19px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="main" data-composition-id="main" data-start="0" data-duration="8" data-width="1200" data-height="810">
+    <div class="scene-content">
+      <div class="query">
+        <div class="query-frame"><img src="assets/query.png" alt="用于搜索的紫红色花朵局部布料"></div>
+        <div class="query-label">局部布料</div>
+      </div>
+      <div class="connector" aria-hidden="true"></div>
+      <div class="results">
+        <div class="results-label">匹配结果</div>
+        <div class="cards">
+          <div class="card primary">
+            <img class="fabric" src="assets/result-01.jpeg" alt="第一张真实搜索结果：天丝条001号">
+            <div class="score"><span>相似度</span><strong>73%</strong></div>
+          </div>
+          <div class="card secondary second">
+            <img class="fabric" src="assets/result-02.jpeg" alt="第二张真实搜索结果：天丝条049号">
+            <div class="score"><span>相似度</span><strong>72%</strong></div>
+          </div>
+          <div class="card secondary third">
+            <img class="fabric" src="assets/result-03.jpeg" alt="第三张真实搜索结果：天丝条005号">
+            <div class="score"><span>相似度</span><strong>72%</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const composition = document.querySelector('#main');
+    const fitComposition = () => {
+      const compact = window.innerWidth < 440;
+      composition.classList.toggle('compact', compact);
+      if (!compact) {
+        const scale = Math.min(window.innerWidth / 1200, window.innerHeight / 810);
+        document.documentElement.style.setProperty('--fit-scale', String(scale));
+      }
+    };
+    fitComposition();
+    window.addEventListener('resize', fitComposition);
+
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    tl.from('.query-frame', { opacity: 0, scale: .94, duration: .65, ease: 'power3.out' }, .15);
+    tl.from('.query-label', { opacity: 0, y: 8, duration: .45, ease: 'sine.out' }, .4);
+    tl.from('.query', { x: 430, scale: 1.3, duration: .95, ease: 'power3.inOut' }, 1.35);
+    tl.from('.connector', { scaleX: 0, opacity: 0, duration: .45, ease: 'power1.out' }, 1.95);
+    tl.from('.results-label', { opacity: 0, x: 10, duration: .5, ease: 'sine.out' }, 2.15);
+    tl.from('.primary', { opacity: 0, x: 36, scale: .97, duration: .8, ease: 'expo.out' }, 2.25);
+    tl.from('.second', { opacity: 0, x: -20, y: 14, rotation: -3, duration: .65, ease: 'power2.out' }, 2.55);
+    tl.from('.third', { opacity: 0, x: -32, y: 8, rotation: -2, duration: .75, ease: 'power4.out' }, 2.7);
+    tl.from('.score', { opacity: 0, y: 5, duration: .35, stagger: .12, ease: 'circ.out' }, 2.85);
+    // The final comparison holds from 3.45s through 8s; no simulated processing timer.
+    window.__timelines.main = tl;
+    // Browsers isolate file:// documents from one another, so the homepage
+    // cannot seek this iframe's timeline. Play locally when opened as a file.
+    if (location.protocol === 'file:' || window.parent === window) {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) tl.seek(8);
+      else tl.play(0);
+    }
+  </script>
+</body>
+</html>
