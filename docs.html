@@ -61,7 +61,35 @@
         <section class="doc-section" id="install"><span class="doc-section-label">安装与登录</span><h2>安装后即可开始</h2><p>首次打开后登录账号，新用户会自动进入 3 天试用。</p><div class="doc-steps"><div class="doc-step"><div><b>下载安装包</b><p>在首页选择 macOS 或 Windows 版本。</p></div></div><div class="doc-step"><div><b>安装并启动</b><p>macOS 支持 Apple Silicon，Windows 支持 Windows 10 / 11 x64。</p></div></div><div class="doc-step"><div><b>登录账号</b><p>使用邮箱登录后即可进入软件。</p></div></div></div></section>
 
         <!-- 建立图库 -->
-        <section class="doc-section" id="library"><span class="doc-section-label">建立图库</span><h2>先让图片变得可搜索</h2><p>选择本地图片文件夹并建立索引。索引完成后，图片无需移动，也不需要重新整理。</p><div class="doc-steps"><div class="doc-step"><div><b>添加图片文件夹</b><p>选择你希望搜索的本地目录。</p></div></div><div class="doc-step"><div><b>选择模型并开始索引</b><p>根据套餐和机器性能选择对应的找图模型。</p></div></div><div class="doc-step"><div><b>等待索引完成</b><p>完成后即可直接用图片进行搜索。</p></div></div></div><div class="doc-shot" aria-label="图库界面示意"><div class="doc-shot-window"><div class="doc-shot-bar"><i></i><i></i><i></i></div><div class="doc-shot-body"><div class="doc-shot-side"></div><div class="doc-shot-grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div><span class="doc-shot-caption">后续替换为真实截图</span></div></section>
+        <section class="doc-section" id="library"><span class="doc-section-label">建立图库</span><h2>先让图片变得可搜索</h2><p>选择本地图片文件夹并建立索引。索引完成后，图片无需移动，也不需要重新整理。</p><div class="doc-steps"><div class="doc-step"><div><b>添加图片文件夹</b><p>选择你希望搜索的本地目录。</p></div></div><div class="doc-step"><div><b>确认索引设置</b><p>使用已启用的找图模型，并确认文件夹同步选项。</p></div></div><div class="doc-step"><div><b>等待索引完成</b><p>完成后即可直接用图片进行搜索。</p></div></div></div><div class="doc-shot library-index-demo" data-library-demo role="img" aria-label="选择本地文件夹并按当前索引设置建立图库；索引完成后，图片仍保留在本地文件夹并可直接搜索。">
+            <div class="doc-shot-window">
+              <div class="doc-shot-bar"><i></i><i></i><i></i><span class="library-window-title">本地图库</span><span class="library-demo-state"><span class="library-state-indexing"><i></i>正在建立索引</span><span class="library-state-ready"><i></i>索引已建立</span></span></div>
+              <div class="doc-shot-body library-demo-body">
+                <div class="library-demo-flow">
+                  <div class="library-demo-source">
+                    <span class="library-demo-label">本地文件夹</span>
+                    <div class="library-folder-card"><span class="library-folder-icon" aria-hidden="true"></span><span class="library-folder-copy"><strong>手袋印花</strong><small>已选择文件夹</small></span><span class="library-selected-mark" aria-hidden="true">✓</span></div>
+                    <div class="library-config-card"><strong>本次建立索引</strong><div><span>找图模型</span><b>当前配置</b></div><div><span>自动同步</span><span class="library-toggle" aria-label="已开启"><i></i></span></div><span class="library-scan-button">开始扫描</span></div>
+                  </div>
+                  <div class="library-flow-arrow" aria-hidden="true"><span>→</span><i></i></div>
+                  <div class="library-demo-gallery">
+                    <div class="library-gallery-head"><div><strong>图片图库</strong><small>索引后即可搜索</small></div><span class="library-image-total"><b>246</b><small>张图片</small></span></div>
+                    <div class="library-gallery-grid">
+                      <span class="library-gallery-tile"><img src="./motion/local-gallery-sync/assets/flower-411416.png" alt="" loading="lazy" decoding="async"></span>
+                      <span class="library-gallery-tile"><img src="./motion/local-gallery-sync/assets/flower-411417.png" alt="" loading="lazy" decoding="async"></span>
+                      <span class="library-gallery-tile"><img src="./motion/local-gallery-sync/assets/flower-411418.png" alt="" loading="lazy" decoding="async"></span>
+                      <span class="library-gallery-tile"><img src="./motion/local-gallery-sync/assets/flower-411419.png" alt="" loading="lazy" decoding="async"></span>
+                      <span class="library-gallery-tile"><img src="./motion/local-gallery-sync/assets/flower-411420.png" alt="" loading="lazy" decoding="async"></span>
+                      <span class="library-gallery-tile"><img src="./motion/local-gallery-sync/assets/flower-411421.png" alt="" loading="lazy" decoding="async"></span>
+                      <span class="library-gallery-tile"><img src="./motion/local-gallery-sync/assets/flower-411422.png" alt="" loading="lazy" decoding="async"></span>
+                      <span class="library-gallery-tile"><img src="./motion/local-gallery-sync/assets/flower-411423.png" alt="" loading="lazy" decoding="async"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="library-demo-progress"><div class="library-progress-state"><span class="library-progress-busy">正在扫描并建立索引</span><span class="library-progress-ready">索引已建立 · 图片可搜索</span></div><span class="library-progress-count"><span class="library-count-busy">正在处理图片…</span><span class="library-count-ready">246 / 246</span></span><span class="library-progress-track"><i></i></span><span class="library-progress-note">原图仍保留在本地文件夹</span></div>
+              </div>
+            </div>
+          </div></section>
 
         <!-- 相似图片 -->
         <section class="doc-section" id="similar"><span class="doc-section-label">相似图片</span><h2>用一张图，找到相近画面</h2><p>选择任意图片作为查询条件，软件会从当前图库或指定范围中返回视觉相似结果。</p><div class="doc-steps"><div class="doc-step"><div><b>选择一张查询图片</b><p>可以从软件内选择，也可以从本地拖入图片。</p></div></div><div class="doc-step"><div><b>选择搜索范围</b><p>可搜索整个图库，也可以限制到指定文件夹或分组。</p></div></div><div class="doc-step"><div><b>查看结果</b><p>结果按相似度返回，可继续打开、筛选或加入分组。</p></div></div></div></section>
