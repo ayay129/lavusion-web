@@ -344,6 +344,7 @@
 .feature-row.reverse .feature-copy { order: 2; }
 .feature-row.reverse .feature-visual { order: 1; }
 .feature-copy h3 { font-size: clamp(36px, 4vw, 58px); line-height: 1.04; letter-spacing: -.045em; margin: 0; }
+.feature-library-description { max-width: 30em; margin: 22px 0 0; color: #6e6e73; font-size: 18px; line-height: 1.6; letter-spacing: -.01em; }
 .feature-visual { min-height: 380px; position: relative; border-radius: 26px; background: #f5f5f7; overflow: hidden; }
 
 .feature-label {
