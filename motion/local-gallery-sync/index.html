@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>览悟找图 · 本地图库同步</title>
+  <script src="../local-fabric-match/assets/gsap.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #f5f5f7; }
+    body { color: #17171a; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif; -webkit-font-smoothing: antialiased; }
+    #main { position: absolute; left: 50%; top: 50%; width: 1200px; height: 810px; transform: translate(-50%, -50%) scale(var(--fit-scale, 1)); transform-origin: center; }
+    .gallery-shell { position: absolute; left: 52px; top: 64px; display: grid; grid-template-columns: 286px 1fr; width: 1096px; height: 682px; overflow: hidden; border: 1px solid #e6e6e9; border-radius: 26px; background: #fff; box-shadow: 0 24px 70px #1111140a; }
+    .folder-sidebar { position: relative; padding: 28px 20px 22px; border-right: 1px solid #ececf0; background: #fafafd; }
+    .sidebar-heading { display: flex; align-items: center; justify-content: space-between; margin: 0 3px 18px; color: #73737a; font-size: 16px; font-weight: 550; }
+    .folder-total { display: inline-flex; align-items: center; justify-content: center; min-width: 25px; height: 23px; padding: 0 7px; border-radius: 999px; background: #efeff2; color: #77777d; font-size: 12px; font-variant-numeric: tabular-nums; }
+    .folder-list { display: flex; flex-direction: column; gap: 7px; }
+    .folder-row { display: grid; grid-template-columns: 18px 1fr auto 10px; align-items: center; gap: 9px; min-height: 51px; padding: 0 10px; border: 1px solid transparent; border-radius: 13px; color: #4d4d53; font-size: 13px; white-space: nowrap; }
+    .folder-icon { width: 16px; height: 13px; position: relative; border: 1.35px solid #92929a; border-radius: 3px; }
+    .folder-icon::before { content: ''; position: absolute; left: 1px; top: -4px; width: 7px; height: 4px; border: 1.2px solid #92929a; border-bottom: 0; border-radius: 3px 3px 0 0; }
+    .folder-name { overflow: hidden; text-overflow: ellipsis; }
+    .folder-count { color: #94949a; font-size: 12px; font-variant-numeric: tabular-nums; }
+    .sync-dot { width: 9px; height: 9px; border-radius: 50%; background: #25a66a; box-shadow: 0 0 0 3px #25a66a14; transition: background .2s ease, box-shadow .2s ease; }
+    .sync-dot.pending { background: #a6a6ad; box-shadow: 0 0 0 3px #a6a6ad20; }
+    .folder-row.selected { border-color: #b8d6fa; background: #f1f7ff; color: #303843; box-shadow: 0 2px 8px #1976f30c; }
+    .folder-row.selected .folder-icon { border-color: #477bb5; }
+    .folder-row.selected .folder-icon::before { border-color: #477bb5; }
+    .sidebar-foot { position: absolute; left: 23px; right: 23px; bottom: 24px; display: flex; align-items: center; gap: 9px; padding-top: 15px; border-top: 1px solid #e9e9ed; color: #7a7a80; font-size: 12px; }
+    .sidebar-foot .sync-dot { width: 8px; height: 8px; }
+    .gallery-content { padding: 27px 29px 25px; min-width: 0; }
+    .gallery-header { display: flex; align-items: center; justify-content: space-between; min-height: 54px; margin-bottom: 13px; }
+    .gallery-title { display: flex; flex-direction: column; gap: 3px; }
+    .gallery-title small { color: #85858b; font-size: 12px; line-height: 1; }
+    .gallery-title strong { color: #242428; font-size: 21px; font-weight: 620; letter-spacing: -.015em; }
+    .header-meta { display: flex; align-items: center; gap: 14px; }
+    .image-count { color: #77777e; font-size: 13px; font-variant-numeric: tabular-nums; }
+    .sync-pill { display: inline-flex; align-items: center; gap: 7px; padding: 8px 11px; border: 1px solid #d9eee2; border-radius: 999px; background: #f4fbf6; color: #31805a; font-size: 12px; font-weight: 560; white-space: nowrap; }
+    .sync-pill .sync-dot { width: 7px; height: 7px; box-shadow: none; }
+    .sync-pill.pending { border-color: #e3e3e7; background: #f6f6f8; color: #77777e; }
+    .event-line { display: flex; align-items: center; gap: 8px; height: 32px; margin-bottom: 14px; color: #828289; font-size: 13px; }
+    .event-mark { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: #f0f0f3; color: #6d6d73; font-size: 12px; font-weight: 650; }
+    .gallery-stage { position: relative; height: 464px; }
+    .gallery-grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 145px; gap: 12px; align-content: start; }
+    .gallery-card { position: relative; display: block; min-width: 0; overflow: hidden; padding: 7px; border: 1px solid #e9e9ed; border-radius: 15px; background: #fff; box-shadow: 0 6px 20px #11111408; }
+    .thumbnail { display: grid; width: 100%; height: 100%; place-items: center; overflow: hidden; border-radius: 9px; background-color: #f3f3f5; background-image: linear-gradient(45deg, #e7e7ea 25%, transparent 25%), linear-gradient(-45deg, #e7e7ea 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e7e7ea 75%), linear-gradient(-45deg, transparent 75%, #e7e7ea 75%); background-position: 0 0, 0 6px, 6px -6px, -6px 0; background-size: 12px 12px; }
+    .thumbnail img { display: block; width: 100%; height: 100%; object-fit: contain; }
+    .fresh-card { position: absolute; z-index: 4; top: 314px; left: 0; display: none; width: 179px; height: 145px; border-color: #89d3a7; box-shadow: 0 12px 34px #25a66a30; transform-origin: center center; }
+    .fresh-card .thumbnail { background-color: #eef8f0; }
+    .fresh-badge { position: absolute; right: 12px; bottom: 12px; padding: 5px 8px; border-radius: 999px; background: #25a66a; color: #fff; font-size: 10px; line-height: 1; font-weight: 650; box-shadow: 0 2px 8px #25a66a33; }
+  </style>
+</head>
+<body>
+  <div id="main" data-composition-id="main" data-start="0" data-duration="8" data-width="1200" data-height="810">
+    <div class="gallery-shell">
+      <aside class="folder-sidebar" aria-label="已同步的来源文件夹">
+        <div class="sidebar-heading"><span>来源文件夹</span><span class="folder-total">5</span></div>
+        <div class="folder-list">
+          <div class="folder-row selected"><i class="folder-icon"></i><span class="folder-name">手袋印花</span><span class="folder-count" id="bag-print-count">245</span><i class="sync-dot"></i></div>
+          <div class="folder-row"><i class="folder-icon"></i><span class="folder-name">演示1绣花26.7.18</span><span class="folder-count">910</span><i class="sync-dot"></i></div>
+          <div class="folder-row"><i class="folder-icon"></i><span class="folder-name">演示2印花26.6.26</span><span class="folder-count">1,240</span><i class="sync-dot"></i></div>
+          <div class="folder-row"><i class="folder-icon"></i><span class="folder-name">演示3印花26.7.7</span><span class="folder-count">1,380</span><i class="sync-dot"></i></div>
+          <div class="folder-row"><i class="folder-icon"></i><span class="folder-name">演示4印花26.6.14</span><span class="folder-count">610</span><i class="sync-dot"></i></div>
+        </div>
+        <div class="sidebar-foot"><i class="sync-dot"></i><span id="sidebar-sync-text">5 个文件夹均已同步</span></div>
+      </aside>
+
+      <section class="gallery-content" aria-label="手袋印花本地图库">
+        <header class="gallery-header">
+          <div class="gallery-title"><small>本地图库</small><strong>手袋印花</strong></div>
+          <div class="header-meta"><span class="image-count"><span id="visible-count">245</span> 张图片</span><span class="sync-pill" id="sync-pill"><i class="sync-dot"></i><span id="sync-text">已同步</span></span></div>
+        </header>
+        <div class="event-line"><i class="event-mark" id="event-mark">✓</i><span id="event-copy">文件夹有变化，图库自动更新</span></div>
+
+        <div class="gallery-stage">
+          <div class="gallery-grid before" aria-label="新增图片前的八张图库图片">
+            <div class="gallery-card"><div class="thumbnail"><img src="assets/flower-411416.png" alt="图库中的透明花卉设计图片"></div></div>
+            <div class="gallery-card"><div class="thumbnail"><img src="assets/flower-411417.png" alt="图库中的教师文字设计图片"></div></div>
+            <div class="gallery-card"><div class="thumbnail"><img src="assets/flower-411418.png" alt="图库中的蜜蜂教师主题设计图片"></div></div>
+            <div class="gallery-card"><div class="thumbnail"><img src="assets/flower-411419.png" alt="图库中的彩色插画设计图片"></div></div>
+            <div class="gallery-card"><div class="thumbnail"><img src="assets/flower-411420.png" alt="图库中的红色字样设计图片"></div></div>
+            <div class="gallery-card"><div class="thumbnail"><img src="assets/flower-411421.png" alt="图库中的彩色文字设计图片"></div></div>
+            <div class="gallery-card"><div class="thumbnail"><img src="assets/flower-411422.png" alt="图库中的教师主题插画设计图片"></div></div>
+            <div class="gallery-card"><div class="thumbnail"><img src="assets/flower-411423.png" alt="图库中的多彩文字设计图片"></div></div>
+          </div>
+          <div class="gallery-card fresh-card"><div class="thumbnail"><img src="assets/flower-411424.png" alt="第九张新加入图库的彩色感谢主题设计图片"></div><span class="fresh-badge" id="fresh-badge">索引中</span></div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script>
+    const composition = document.querySelector('#main');
+    const fitComposition = () => {
+      document.documentElement.style.setProperty('--fit-scale', String(Math.min(window.innerWidth / 1200, window.innerHeight / 810)));
+    };
+    fitComposition();
+    window.addEventListener('resize', fitComposition);
+
+    const eventCopy = document.querySelector('#event-copy');
+    const eventMark = document.querySelector('#event-mark');
+    const bagPrintCount = document.querySelector('#bag-print-count');
+    const visibleCount = document.querySelector('#visible-count');
+    const selectedSyncDot = document.querySelector('.folder-row.selected .sync-dot');
+    const syncPill = document.querySelector('#sync-pill');
+    const syncText = document.querySelector('#sync-text');
+    const sidebarSyncText = document.querySelector('#sidebar-sync-text');
+    const freshCard = document.querySelector('.fresh-card');
+    const freshBadge = document.querySelector('#fresh-badge');
+    const galleryStage = document.querySelector('.gallery-stage');
+    const cardWidth = (galleryStage.clientWidth - 36) / 4;
+    const thirdRowTop = 2 * (145 + 12);
+    const focusLeft = (galleryStage.clientWidth - cardWidth) / 2;
+    const setEvent = (copy, mark = '✓') => {
+      eventCopy.textContent = copy;
+      eventMark.textContent = mark;
+    };
+    const setPending = (pending) => {
+      selectedSyncDot.classList.toggle('pending', pending);
+      syncPill.classList.toggle('pending', pending);
+      syncPill.querySelector('.sync-dot').classList.toggle('pending', pending);
+      syncText.textContent = pending ? '同步中' : '已同步';
+      sidebarSyncText.textContent = pending ? '手袋印花 正在建立索引' : '5 个文件夹均已同步';
+    };
+
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    tl.from('.gallery-shell', { opacity: 0, y: 18, scale: .985, duration: .65, ease: 'power3.out' }, .08);
+    tl.from('.folder-row', { opacity: 0, x: -12, duration: .35, stagger: .08, ease: 'sine.out' }, .36);
+    tl.from('.gallery-header', { opacity: 0, y: 8, duration: .4, ease: 'sine.out' }, .55);
+    tl.from('.event-line', { opacity: 0, y: 5, duration: .35, ease: 'sine.out' }, .7);
+    tl.from('.before .gallery-card', { opacity: 0, y: 13, scale: .97, duration: .42, stagger: .045, ease: 'power2.out' }, .82);
+    tl.to({}, { duration: 1.2 }, 1.8);
+
+    tl.to('#event-copy, #event-mark', { opacity: 0, y: -3, duration: .13, ease: 'sine.in' }, 3.05);
+    tl.call(() => setEvent('手袋印花新增图片，正在自动建立索引', '+'), null, 3.18);
+    tl.call(() => setPending(true), null, 3.18);
+    tl.set(freshCard, { display: 'block', left: focusLeft, top: thirdRowTop, width: cardWidth, height: 145, opacity: 0, scale: .82 }, 3.18);
+    tl.fromTo(freshCard, { opacity: 0, scale: .82 }, { opacity: 1, scale: 1.34, duration: .5, ease: 'back.out(1.5)' }, 3.18);
+    tl.to([bagPrintCount, visibleCount], { textContent: 246, duration: .42, snap: { textContent: 1 }, ease: 'none' }, 3.35);
+    tl.to('.folder-row.selected .sync-dot', { scale: 1.45, duration: .25, yoyo: true, repeat: 2, ease: 'sine.inOut' }, 3.2);
+    tl.to(freshCard, { scale: 1.42, duration: .24, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 3.75);
+    tl.to(freshCard, { left: 0, top: thirdRowTop, scale: 1, duration: .9, ease: 'power3.inOut' }, 4.22);
+    tl.call(() => { freshBadge.textContent = '索引完成'; }, null, 5.0);
+    tl.to('#event-copy, #event-mark', { opacity: 0, y: -3, duration: .13, ease: 'sine.in' }, 5.0);
+    tl.call(() => setEvent('第 246 张图片已入库，索引自动建立完成', '✓'), null, 5.13);
+    tl.call(() => setPending(false), null, 5.13);
+    tl.fromTo('#event-copy, #event-mark', { opacity: 0, y: 3 }, { opacity: 1, y: 0, duration: .28, ease: 'sine.out' }, 5.13);
+    tl.to({}, { duration: 2.55 }, 5.45);
+
+    window.__timelines.main = tl;
+    if (location.protocol === 'file:' || window.parent === window) {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) tl.seek(8);
+      else tl.play(0);
+    }
+  </script>
+</body>
+</html>
