@@ -2,11 +2,13 @@
 // Download configuration
 // =========================================================
 const downloadConfig = window.LAVUSION_CONFIG?.downloads ?? {};
+const appVersion = window.LAVUSION_CONFIG?.version;
 
 document.querySelectorAll('[data-download-platform]').forEach((link) => {
   const platform = link.dataset.downloadPlatform;
   const url = downloadConfig[platform];
   if (url) link.href = url;
+  if (appVersion) link.querySelector('.download-menu-copy b')?.append(` · v${appVersion}`);
 });
 
 // =========================================================
