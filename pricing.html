@@ -8,7 +8,7 @@
   <title>价格 · 览悟找图</title>
   <link rel="stylesheet" href="./css/common.css?v=20260924" />
   <link rel="stylesheet" href="./css/pricing.css" />
-  <link rel="stylesheet" href="./css/mac-download.css" />
+  <link rel="stylesheet" href="./css/mac-download.css?v=windows-guide-1" />
 </head>
 <body class="pricing-page">
   <!-- ========================= Header ========================= -->
@@ -151,6 +151,43 @@
     </div>
   </div>
 
+  <div class="mac-download-modal windows-download-modal" data-windows-download-modal hidden>
+    <div class="mac-download-backdrop" data-windows-download-cancel></div>
+    <section class="mac-download-dialog windows-download-dialog" role="dialog" aria-modal="true" aria-labelledby="windows-download-title">
+      <button class="mac-download-close" type="button" aria-label="关闭" data-windows-download-cancel>×</button>
+      <p class="mac-download-kicker">Windows 下载提示</p>
+      <h2 id="windows-download-title">下载或打开时，可能出现安全提示</h2>
+      <p class="mac-download-desc">请先确认安装包来自览悟找图官网，文件名为「览悟找图 Setup <span data-windows-download-version></span>.exe」。如果来源或文件名不一致，请取消。</p>
+      <div class="windows-download-steps">
+        <details class="windows-download-step">
+          <summary><b>1</b><span><strong>浏览器询问是否保留文件</strong><small>如果看到“通常不会下载此文件”</small></span><i aria-hidden="true">⌄</i></summary>
+          <div class="windows-download-step-body">
+            <p>在下载列表中打开文件旁的菜单，选择“保留”；如果再次确认，再选择“仍然保留”。</p>
+            <div class="windows-download-images">
+              <figure><figcaption>选择“保留”</figcaption><a href="./assets/images/windows-download/01-edge-warning.png" target="_blank" rel="noreferrer"><img src="./assets/images/windows-download/01-edge-warning.png" alt="Edge 下载提示中打开菜单并选择保留" loading="lazy" /></a></figure>
+              <figure><figcaption>确认“仍然保留”</figcaption><a href="./assets/images/windows-download/02-edge-keep-anyway.png" target="_blank" rel="noreferrer"><img src="./assets/images/windows-download/02-edge-keep-anyway.png" alt="Edge 二次确认时选择仍然保留" loading="lazy" /></a></figure>
+            </div>
+          </div>
+        </details>
+        <details class="windows-download-step">
+          <summary><b>2</b><span><strong>SmartScreen 阻止应用启动</strong><small>确认文件无误后再继续运行</small></span><i aria-hidden="true">⌄</i></summary>
+          <div class="windows-download-step-body">
+            <p>打开安装包时，如果出现“Windows 已保护你的电脑”，先点“更多信息”，再点“仍要运行”。</p>
+            <div class="windows-download-images">
+              <figure><figcaption>先点“更多信息”</figcaption><a href="./assets/images/windows-download/03-smartscreen-more-info.png" target="_blank" rel="noreferrer"><img src="./assets/images/windows-download/03-smartscreen-more-info.png" alt="SmartScreen 提示中点击更多信息" loading="lazy" /></a></figure>
+              <figure><figcaption>再点“仍要运行”</figcaption><a href="./assets/images/windows-download/04-smartscreen-run-anyway.png" target="_blank" rel="noreferrer"><img src="./assets/images/windows-download/04-smartscreen-run-anyway.png" alt="展开 SmartScreen 信息后点击仍要运行" loading="lazy" /></a></figure>
+            </div>
+          </div>
+        </details>
+      </div>
+      <div class="mac-download-actions">
+        <button class="mac-download-cancel" type="button" data-windows-download-cancel>取消</button>
+        <button class="mac-download-confirm" type="button" data-windows-download-confirm>了解并继续下载</button>
+      </div>
+    </section>
+  </div>
+
+
   <!-- ========================= Footer ========================= -->
   <footer class="site-footer section-shell">
     <div class="footer-brand">
@@ -171,7 +208,7 @@
 
   <script src="./js/common.js"></script>
   <script src="./js/config.js?v=1.2.5-2"></script>
-  <script src="./js/download.js?v=1.2.5-2"></script>
+  <script src="./js/download.js?v=windows-guide-1"></script>
   <script src="./js/pricing.js"></script>
 </body>
 </html>

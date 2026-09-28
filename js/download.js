@@ -71,6 +71,46 @@ macDownloadLink?.addEventListener('click', (event) => {
   macDownloadConfirm?.focus();
 });
 
+const windowsDownloadLink = document.querySelector('[data-download-platform="windows"]');
+const windowsDownloadModal = document.querySelector('[data-windows-download-modal]');
+const windowsDownloadConfirm = document.querySelector('[data-windows-download-confirm]');
+const windowsDownloadCancelButtons = document.querySelectorAll('[data-windows-download-cancel]');
+let pendingWindowsDownloadUrl = '';
+
+document.querySelectorAll('[data-windows-download-version]').forEach((element) => {
+  element.textContent = appVersion || '';
+});
+
+const closeWindowsDownloadModal = () => {
+  if (!windowsDownloadModal) return;
+  windowsDownloadModal.hidden = true;
+  document.body.classList.remove('modal-open');
+  pendingWindowsDownloadUrl = '';
+};
+
+windowsDownloadLink?.addEventListener('click', (event) => {
+  event.preventDefault();
+  pendingWindowsDownloadUrl = downloadConfig.windows || windowsDownloadLink.href;
+  closeDownloadMenu();
+  if (!windowsDownloadModal) {
+    if (pendingWindowsDownloadUrl) window.location.href = pendingWindowsDownloadUrl;
+    return;
+  }
+  windowsDownloadModal.hidden = false;
+  document.body.classList.add('modal-open');
+  windowsDownloadConfirm?.focus();
+});
+
+windowsDownloadCancelButtons.forEach((button) => {
+  button.addEventListener('click', closeWindowsDownloadModal);
+});
+
+windowsDownloadConfirm?.addEventListener('click', () => {
+  const url = pendingWindowsDownloadUrl;
+  closeWindowsDownloadModal();
+  if (url) window.location.href = url;
+});
+
 macDownloadCancelButtons.forEach((button) => {
   button.addEventListener('click', closeMacDownloadModal);
 });
@@ -102,5 +142,8 @@ copyMacCommandButton?.addEventListener('click', async () => {
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && macDownloadModal && !macDownloadModal.hidden) {
     closeMacDownloadModal();
+  }
+  if (event.key === 'Escape' && windowsDownloadModal && !windowsDownloadModal.hidden) {
+    closeWindowsDownloadModal();
   }
 });
