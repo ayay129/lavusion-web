@@ -2,12 +2,12 @@
 // Download configuration
 // =========================================================
 const downloadConfig = window.LAVUSION_CONFIG?.downloads ?? {};
-const appVersion = window.LAVUSION_CONFIG?.version;
 
 document.querySelectorAll('[data-download-platform]').forEach((link) => {
   const platform = link.dataset.downloadPlatform;
   const url = downloadConfig[platform];
   if (url) link.href = url;
+  const appVersion = url?.split(/[?#]/, 1)[0].match(/\/version(\d+(?:\.\d+)+)\//)?.[1];
   if (appVersion) link.querySelector('.download-menu-copy b')?.append(` · v${appVersion}`);
 });
 
@@ -77,8 +77,15 @@ const windowsDownloadConfirm = document.querySelector('[data-windows-download-co
 const windowsDownloadCancelButtons = document.querySelectorAll('[data-windows-download-cancel]');
 let pendingWindowsDownloadUrl = '';
 
-document.querySelectorAll('[data-windows-download-version]').forEach((element) => {
-  element.textContent = appVersion || '';
+document.querySelectorAll('[data-windows-download-filename]').forEach((element) => {
+  const filename = downloadConfig.windows?.split(/[?#]/, 1)[0].split('/').pop();
+  if (filename) {
+    try {
+      element.textContent = decodeURIComponent(filename);
+    } catch {
+      element.textContent = filename;
+    }
+  }
 });
 
 const closeWindowsDownloadModal = () => {
